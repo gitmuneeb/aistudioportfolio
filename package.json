@@ -1,3 +1,9 @@
+"homepage": "https://gitmuneeb.github.io/aistudioportfolio"
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
+
 {
   "name": "muneeb-bashir-portfolio",
   "private": true,
