@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -22,45 +21,69 @@ const ThreeScene: React.FC = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 4;
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 8;
 
-    // Create a group to hold everything
-    const group = new THREE.Group();
-    scene.add(group);
+    // Particle Flux System
+    const count = 1500;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
 
-    // Geometry 1: Abstract Torus Knot (Wireframe)
-    const geometry = new THREE.TorusKnotGeometry(1.5, 0.4, 120, 20);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0x6366f1, 
-      wireframe: true, 
-      transparent: true, 
-      opacity: 0.15 
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    group.add(mesh);
+    const color1 = new THREE.Color("#6366f1"); // Primary
+    const color2 = new THREE.Color("#ffffff"); // White accents
 
-    // Geometry 2: Floating Particles
-    const particlesCount = 800;
-    const posArray = new Float32Array(particlesCount * 3);
-    for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 12;
+    for (let i = 0; i < count; i++) {
+      // Randomly place particles in a cylindrical/vortex shape
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 5 + Math.random() * 15;
+      const x = Math.cos(angle) * radius;
+      const y = (Math.random() - 0.5) * 30;
+      const z = Math.sin(angle) * radius;
+
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+
+      // Blend colors
+      const mixedColor = color1.clone().lerp(color2, Math.random() * 0.2);
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+
+      sizes[i] = Math.random() * 2;
     }
-    const particlesGeometry = new THREE.BufferGeometry();
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.004,
-      color: 0xffffff,
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.04,
+      vertexColors: true,
       transparent: true,
       opacity: 0.4,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
     });
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // Grid Plane (Subtle background reference)
+    const gridHelper = new THREE.GridHelper(50, 50, 0x6366f1, 0x111111);
+    gridHelper.position.y = -10;
+    gridHelper.material.transparent = true;
+    gridHelper.material.opacity = 0.05;
+    scene.add(gridHelper);
 
     // Interaction Variables
     let mouseX = 0;
     let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
     let scrollY = 0;
+    let time = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
       mouseX = (event.clientX / window.innerWidth) - 0.5;
@@ -76,19 +99,21 @@ const ThreeScene: React.FC = () => {
 
     const animate = () => {
       requestAnimationFrame(animate);
+      time += 0.002;
 
-      // Rotation
-      mesh.rotation.y += 0.003;
-      mesh.rotation.z += 0.001;
-      particlesMesh.rotation.y -= 0.0005;
+      // Rotate points based on time and scroll
+      points.rotation.y = time * 0.5 + scrollY * 0.0005;
+      points.rotation.z = time * 0.2;
 
-      // Interaction lerping
-      group.position.x += (mouseX * 2 - group.position.x) * 0.05;
-      group.position.y += (-mouseY * 2 - group.position.y) * 0.05;
-      
-      // Scroll effect
-      group.position.z = scrollY * 0.002;
-      group.rotation.x = scrollY * 0.001;
+      // Mouse following
+      targetX = mouseX * 2;
+      targetY = -mouseY * 2;
+      camera.position.x += (targetX - camera.position.x) * 0.05;
+      camera.position.y += (targetY - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0);
+
+      // Pulse points
+      material.opacity = 0.3 + Math.sin(time * 5) * 0.1;
 
       renderer.render(scene, camera);
     };
@@ -107,6 +132,7 @@ const ThreeScene: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
+      renderer.dispose();
     };
   }, []);
 

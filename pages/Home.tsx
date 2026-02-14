@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import ThreeScene from '../components/ThreeScene';
 
-// Improved Reveal Hook - Triggers once and stays visible
 const useReveal = () => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
@@ -13,7 +12,6 @@ const useReveal = () => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
-        // Once visible, stop observing to keep it visible
         if (domRef.current) observer.unobserve(domRef.current);
       }
     }, { 
@@ -28,44 +26,48 @@ const useReveal = () => {
   return { isVisible, domRef };
 };
 
-const ProjectCard: React.FC<{ project: any, index: number }> = ({ project, index }) => {
+const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => {
   const { isVisible, domRef } = useReveal();
   
   return (
     <Link 
       to={`/work/${project.slug}`} 
       ref={domRef}
-      className={`group block space-y-10 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`group relative block overflow-hidden rounded-[2.5rem] bg-neutral-900 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-      } ${index % 2 !== 0 ? 'md:mt-48' : ''}`}
+      }`}
     >
-      <div className="aspect-[4/5] rounded-[2.5rem] bg-neutral-900 overflow-hidden relative shadow-2xl border border-white/5">
+      <div className="aspect-[16/10] md:aspect-[4/5] w-full overflow-hidden">
          <img 
             src={project.mainImage} 
             alt={project.title} 
-            className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" 
+            className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-[1.5s] ease-out" 
          />
-         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-20 transition-opacity"></div>
-         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100">
-            <div className="bg-white text-black px-8 py-4 rounded-full font-bold text-xs uppercase tracking-[0.2em] shadow-2xl">
-              View Case Study
-            </div>
-         </div>
       </div>
-      <div className="flex justify-between items-start pt-2 px-2">
-        <div className="space-y-4">
-            <h3 className="text-4xl md:text-6xl font-bold text-white group-hover:text-primary transition-colors leading-none tracking-tighter uppercase">
-              {project.title}
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {project.tags.map((tag: string) => (
-                <span key={tag} className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                  {tag}
-                </span>
-              ))}
-            </div>
+      
+      {/* Overlay Information */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+      
+      <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 space-y-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-primary font-bold uppercase tracking-[0.4em]">{project.year}</span>
+          <div className="flex gap-2">
+            {project.tags.slice(0, 2).map((tag: string) => (
+              <span key={tag} className="text-[8px] text-white/40 font-bold uppercase tracking-widest border border-white/10 px-2 py-1 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-        <span className="text-slate-800 font-mono text-xs mt-3 hidden sm:block">{project.year}</span>
+        <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase leading-none">
+          {project.title}
+        </h3>
+        <p className="text-slate-400 text-sm max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
+          {project.description}
+        </p>
+        <div className="pt-4 flex items-center gap-3 text-white font-bold text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
+          View Case <span className="material-icons text-xs">arrow_forward</span>
+        </div>
       </div>
     </Link>
   );
@@ -80,20 +82,20 @@ const Home: React.FC = () => {
   }, []);
 
   const featuredImages = [
-    "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=400"
+    "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800"
   ];
 
-  const carouselImages = [...featuredImages, ...featuredImages];
+  const carouselImages = [...featuredImages, ...featuredImages, ...featuredImages];
 
   return (
     <div className="relative">
       <ThreeScene />
       
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-64">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-24">
         {/* Hero Section */}
         <section className="min-h-[85vh] flex flex-col justify-center space-y-16">
           <div className={`transition-all duration-1000 delay-[100ms] transform ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
@@ -142,70 +144,102 @@ const Home: React.FC = () => {
                   <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Lahore, Pakistan • Open for Remote</p>
               </div>
             </div>
-            
-            <div className="flex items-center gap-12">
-              {['LinkedIn', 'X', 'Instagram'].map((name) => (
-                <a key={name} href="#" className="group relative overflow-hidden h-6">
-                  <div className="flex flex-col group-hover:-translate-y-6 transition-transform duration-500 ease-in-out">
-                    <span className="text-[11px] font-bold tracking-[0.4em] text-slate-500 uppercase">{name}</span>
-                    <span className="text-[11px] font-bold tracking-[0.4em] text-white uppercase">{name}</span>
-                  </div>
-                </a>
-              ))}
+          </div>
+        </section>
+
+        {/* Improved Carousel - Portrait Design - 3 visible in viewport */}
+        <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden pause-on-hover py-32 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.5em]">PROCESS & MOMENTS</span>
+            <div className="flex gap-4">
+              <div className="h-[1px] w-24 bg-white/10"></div>
+              <span className="text-[10px] text-white/20 font-mono tracking-widest italic">SLIDE TO EXPLORE</span>
             </div>
+          </div>
+          <div className="flex w-max animate-infinite-scroll gap-6 md:gap-10 px-6">
+            {carouselImages.map((src, i) => (
+              <div key={i} className="w-[60vw] sm:w-[40vw] md:w-[28vw] aspect-[3/4.5] flex-shrink-0 rounded-[2.5rem] bg-neutral-900 overflow-hidden group shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] border border-white/5 transition-all duration-700 hover:border-primary/50 relative">
+                <div className="absolute inset-0 bg-neutral-950/20 z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-500"></div>
+                <img 
+                  src={src} 
+                  className="w-full h-full object-cover grayscale opacity-30 transition-all duration-[1.5s] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110" 
+                  alt={`Deliverable ${i}`} 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-10 z-20">
+                   <p className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-2">ARCHIVE • 2025</p>
+                   <h4 className="text-white text-2xl font-bold tracking-tighter uppercase">PROCESS BLOCK 0{i+1}</h4>
+                </div>
+                {/* Noise texture overlay */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* Selected Works Grid */}
-        <section className="space-y-40">
-          <div className="flex items-end justify-between border-b border-white/5 pb-16">
+        <section className="space-y-32 pt-32">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-16">
             <div className="space-y-6">
               <span className="text-[11px] text-primary font-bold uppercase tracking-[0.5em]">01 • WORK</span>
               <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-white uppercase">SELECTED PROJECTS</h2>
             </div>
-            <div className="flex items-center gap-4 text-slate-700 font-mono text-xs hidden md:flex">
-              <span>(SCROLL TO EXPLORE)</span>
-              <span className="material-icons animate-bounce text-sm">south</span>
-            </div>
+            <p className="text-slate-500 max-w-xs text-sm font-medium">A curated selection of work ranging from e-commerce systems to IoT platforms.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-48">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
             {PROJECTS.map((project, idx) => (
               <ProjectCard key={project.slug} project={project} index={idx} />
             ))}
           </div>
         </section>
 
-        {/* Dynamic Carousel / Gallery */}
-        <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden pause-on-hover py-20">
-          <div className="flex w-max animate-infinite-scroll gap-12">
-            {carouselImages.map((src, i) => (
-              <div key={i} className="w-[400px] md:w-[700px] aspect-video flex-shrink-0 rounded-[3rem] bg-neutral-900 overflow-hidden group shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5">
-                <img 
-                  src={src} 
-                  className="w-full h-full object-cover grayscale opacity-30 transition-all duration-1000 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105" 
-                  alt={`Deliverable ${i}`} 
-                />
-              </div>
-            ))}
+        {/* Revamped CTA Section - Magnetic & Dynamic */}
+        <section className="relative py-80 overflow-hidden group/cta">
+          {/* Animated Background Text Marquee */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02] select-none whitespace-nowrap overflow-hidden">
+             <div className="text-[25vw] font-black tracking-tighter uppercase leading-none animate-infinite-scroll italic" style={{ animationDuration: '60s', animationDirection: 'reverse' }}>
+               SAY HELLO • HIRE ME • START A PROJECT • SAY HELLO • HIRE ME • START A PROJECT •
+             </div>
           </div>
-        </section>
 
-        {/* Huge Footer CTA */}
-        <section className="py-64 text-center space-y-20">
-          <div className="space-y-6">
-            <span className="text-[11px] text-primary font-bold uppercase tracking-[0.5em] reveal-hidden">Let's work together</span>
-            <h2 className="text-7xl md:text-[14vw] font-bold tracking-tighter text-white uppercase leading-[0.75] reveal-hidden">
-              HAVE A <span className="text-neutral-800">PROJECT?</span>
-            </h2>
-          </div>
-          <div className="pt-10">
-            <Link to="/contact" className="inline-block group relative">
-              <div className="absolute -inset-8 bg-primary/20 blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-              <div className="relative bg-white text-black px-24 py-10 rounded-full font-black text-2xl tracking-tighter hover:bg-primary hover:text-white transition-all duration-500 transform hover:scale-105 active:scale-95 shadow-2xl">
-                GET IN TOUCH
+          {/* Floating Accents */}
+          <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-primary rounded-full animate-ping delay-75"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-white/20 rounded-full animate-ping delay-500"></div>
+
+          <div className="relative text-center space-y-12 z-10">
+            <div className="space-y-4">
+              <div className="flex items-center justify-center gap-4 mb-4 opacity-60 group-hover/cta:opacity-100 transition-opacity duration-700">
+                <span className="h-[1px] w-8 bg-primary"></span>
+                <span className="text-[10px] text-white font-bold uppercase tracking-[0.6em]">ESTABLISHED IN 1998 • PAKISTAN</span>
+                <span className="h-[1px] w-8 bg-primary"></span>
               </div>
-            </Link>
+              <h2 className="text-8xl md:text-[15vw] font-black tracking-[calc(-0.03em)] text-white uppercase leading-[0.75] transition-all duration-1000 group-hover/cta:tracking-tight">
+                WORK <br /> 
+                <span className="text-neutral-900 group-hover/cta:text-white transition-colors duration-1000">TOGETHER.</span>
+              </h2>
+            </div>
+
+            <div className="pt-8 flex flex-col items-center gap-12">
+              <Link to="/contact" className="inline-block group relative">
+                <div className="absolute -inset-12 bg-primary/30 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-[1.5s]"></div>
+                <div className="absolute inset-0 bg-primary/20 scale-[1.3] blur-[40px] opacity-0 group-hover:opacity-50 transition-opacity duration-1000"></div>
+                
+                <div className="relative bg-white text-black px-20 md:px-32 py-8 md:py-12 rounded-full font-black text-2xl md:text-3xl tracking-tighter hover:bg-primary hover:text-white transition-all duration-700 transform hover:scale-[1.1] hover:-rotate-1 active:scale-95 shadow-[0_20px_60px_-10px_rgba(99,102,241,0.3)] flex items-center gap-6 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+                  <span>START A PROJECT</span>
+                  <span className="material-icons text-3xl group-hover:translate-x-3 transition-transform duration-500">east</span>
+                </div>
+              </Link>
+
+              {/* Status Indicator */}
+              <div className="flex items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest border border-white/5 px-8 py-4 rounded-full backdrop-blur-md">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </div>
+                AVAILABLE FOR NEW OPPORTUNITIES
+              </div>
+            </div>
           </div>
         </section>
       </div>

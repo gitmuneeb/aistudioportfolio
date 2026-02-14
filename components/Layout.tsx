@@ -3,6 +3,43 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import FooterCanvas from './FooterCanvas';
 
+const ScrollToTopButton: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <button
+      onClick={scrollToTop}
+      className={`fixed bottom-12 right-12 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-white text-black shadow-2xl transition-all duration-700 transform hover:scale-110 hover:bg-primary hover:text-white group ${
+        isVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-20 opacity-0 pointer-events-none'
+      }`}
+      aria-label="Scroll to top"
+    >
+      <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <span className="material-icons relative z-10 font-bold transition-transform duration-500 group-hover:-translate-y-1">north</span>
+    </button>
+  );
+};
+
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,8 +78,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="sticky top-0 z-50 py-8 px-6 md:px-12 backdrop-blur-md">
+    <div className="flex flex-col min-h-screen relative">
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
+
+      {/* Changed: Navbar is now non-sticky (removed sticky top-0) */}
+      <header className="relative z-50 py-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link to="/" className="group flex items-center gap-3">
             <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center font-black text-sm tracking-tighter group-hover:bg-primary group-hover:text-white transition-all duration-500">
@@ -56,11 +97,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-[10px] font-bold tracking-[0.3em] transition-all hover:text-white ${
+                className={`text-[10px] font-bold tracking-[0.3em] transition-all hover:text-white relative group ${
                   location.pathname === link.path ? 'text-white' : 'text-slate-500'
                 }`}
               >
                 {link.name}
+                <span className={`absolute -bottom-2 left-0 h-px bg-primary transition-all duration-500 ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
             ))}
           </nav>
@@ -75,15 +117,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-40 bg-black flex flex-col items-center justify-center space-y-8 p-6">
-            <button className="absolute top-8 right-6 text-white" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="md:hidden fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center space-y-8 p-6">
+            <button className="absolute top-12 right-6 text-white" onClick={() => setIsMobileMenuOpen(false)}>
                 <span className="material-icons text-4xl">close</span>
             </button>
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-4xl font-bold text-white tracking-tighter"
+                className="text-4xl font-bold text-white tracking-tighter hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
