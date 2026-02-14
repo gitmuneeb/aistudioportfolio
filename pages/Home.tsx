@@ -57,7 +57,7 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
             ))}
           </div>
         </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter uppercase leading-none">
+        <h3 className="text-xl md:text-2xl font-bold text-white tracking-tighter uppercase leading-none">
           {project.title}
         </h3>
         <p className="text-slate-400 text-xs max-w-xs opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 line-clamp-2">
@@ -190,13 +190,13 @@ const Home: React.FC = () => {
         </section>
 
         {/* Selected Works Grid */}
-        <section className="space-y-32 pt-32">
+        <section id="projects-grid" className="space-y-32 pt-32">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-16">
             <div className="space-y-6">
               <span className="text-[11px] text-primary font-bold uppercase tracking-[0.5em]">01 • WORK</span>
-              <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-white uppercase">SELECTED PROJECTS</h2>
+              <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-white uppercase">PROJECTS SHOWCASE</h2>
             </div>
-            <p className="text-slate-500 max-w-xs text-sm font-medium">A curated selection of work ranging from e-commerce systems to IoT platforms.</p>
+            <p className="text-slate-500 max-w-xs text-sm font-medium">A curated selection of cross-platform work ranging from Figma UI systems to WordPress portals.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">

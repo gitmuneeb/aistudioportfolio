@@ -2,90 +2,102 @@ import { Project, Post, Update } from './types';
 
 export const PROJECTS: Project[] = [
   {
-    slug: 'shopflix',
-    title: 'Shopflix.gr',
+    slug: 'attendance-leave-management',
+    title: 'ATTENDANCE AND LEAVE MANAGEMENT',
     year: '2024',
-    description: 'A comprehensive design system and UI overhaul for one of Greece\'s leading marketplaces.',
-    role: 'Lead Product Designer',
-    background: 'Redesigning the core shopping experience to improve conversion rates and consolidate disparate UI patterns.',
-    outcome: '20% increase in checkout completions and faster development cycles.',
-    mainImage: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=1200',
+    description: 'A comprehensive Figma project featuring a centralized hub for employer news and granular employee attendance tracking.',
+    role: 'Lead UI/UX Designer',
+    background: 'Designing a robust enterprise solution to bridge the gap between HR administration and employee self-service, focusing on complex attendance workflows.',
+    outcome: 'Streamlined approval cycles and a 30% reduction in manual attendance logging errors.',
+    mainImage: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=1200',
     screenshots: [
-      'https://images.unsplash.com/photo-1551288049-bbda38a5f452?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1551288569-ee50f1f44529?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1454165833767-027ff390432a?auto=format&fit=crop&q=80&w=800'
     ],
-    tags: ['E-Commerce', 'Product Design']
+    tags: ['Figma', 'Enterprise UI']
   },
   {
-    slug: 'veloce',
-    title: 'Veloce',
+    slug: 'esi-event-organizer',
+    title: 'ESI',
     year: '2024',
-    description: 'Premium urban mobility platform for high-end electric bike rentals.',
-    role: 'Lead Mobile Designer',
-    background: 'Disrupting the budget rental market with a premium app that feels as smooth as the ride.',
-    outcome: 'Launched in 3 major cities with 45% user retention.',
-    mainImage: 'https://images.unsplash.com/photo-1593351415075-3bac9f45c877?auto=format&fit=crop&q=80&w=1200',
-    screenshots: [
-      'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800'
-    ],
-    tags: ['Mobile App', 'IoT']
-  },
-  {
-    slug: 'airboxr',
-    title: 'Airboxr',
-    year: '2023',
-    description: 'Data-to-dashboard tool for e-commerce marketers.',
+    description: 'A high-energy, visually stunning event organizer website designed in Figma for global scale conferences and networking.',
     role: 'Product Designer',
-    background: '0-to-1 design approach for a complex data aggregation platform.',
-    outcome: 'Reduced user churn by 15% in the first quarter post-launch.',
-    mainImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
+    background: 'Crafting a cool, immersive interface that handles complex scheduling and speaker management with a sleek, user-centric approach.',
+    outcome: 'An optimized booking flow that increased pre-registration rates by 40% for major global events.',
+    mainImage: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1200',
     screenshots: [
-      'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1475721027185-39a1294d3016?auto=format&fit=crop&q=80&w=800'
     ],
-    tags: ['SaaS', '0→1 Design']
+    tags: ['Figma', 'Event Tech']
   },
   {
-    slug: 'healthsync',
-    title: 'HealthSync',
-    year: '2023',
-    description: 'Unified health data visualization platform for athletes.',
-    role: 'UI/UX Designer',
-    background: 'Aggregating wearable data from Apple, Oura, and Garmin into one view.',
-    outcome: 'Adopted by 2 olympic training facilities.',
-    mainImage: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1200',
-    screenshots: [
-      'https://images.unsplash.com/photo-1504868584819-f8e90526354c?auto=format&fit=crop&q=80&w=800'
-    ],
-    tags: ['Health Tech', 'Analytics']
-  },
-  {
-    slug: 'ecotrack',
-    title: 'EcoTrack',
-    year: '2022',
-    description: 'B2B SaaS helping corporations track carbon footprint.',
-    role: 'UI/UX Designer',
-    background: 'Visualizing complex supply chain emissions data.',
-    outcome: 'Onboarded 5 Fortune 500 companies.',
-    mainImage: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200',
-    screenshots: [
-      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=400'
-    ],
-    tags: ['CleanTech', 'Dashboard']
-  },
-  {
-    slug: 'concept-aura',
-    title: 'Aura',
+    slug: 'the-belvoir-collection',
+    title: 'The Belvoir Collection',
     year: '2024',
-    description: 'A experimental minimalist weather application concept.',
+    description: 'The digital flagship for a premier consultancy and design firm, emphasizing luxury aesthetics and brand authority.',
     role: 'Creative Designer',
-    background: 'Exploring the boundary between information and abstract art.',
-    outcome: 'Featured on multiple design inspiration boards.',
-    mainImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1200',
+    background: 'Developing a minimal but powerful Figma identity for a high-end studio that defines luxury living and high-level design consultancy.',
+    outcome: 'A distinguished web presence that successfully attracted Tier-1 corporate partners.',
+    mainImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
     screenshots: [
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=400'
+      'https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&q=80&w=800'
     ],
-    tags: ['Concept', 'Abstract UI']
+    tags: ['Figma', 'Consultancy']
+  },
+  {
+    slug: 'albalagh-academy',
+    title: 'Albalagh Academy',
+    year: '2023',
+    description: 'A feature-rich Shopify e-commerce and educational platform tailored for global content distribution.',
+    role: 'Full Stack Developer',
+    background: 'Migrating an established educational legacy to a robust, scalable Shopify infrastructure to handle global student intake.',
+    outcome: 'Successfully onboarded 50k+ students with a 99.9% uptime during peak course launches.',
+    mainImage: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200',
+    screenshots: [
+      'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800'
+    ],
+    tags: ['Shopify', 'EdTech']
+  },
+  {
+    slug: 'radiant-beauty-wp',
+    title: 'Radiant Beauty Store',
+    year: '2023',
+    description: 'A bespoke WordPress e-commerce solution for high-growth cosmetics firms requiring dynamic content management.',
+    role: 'WP Developer',
+    background: 'Building a high-performance WordPress site focused on SEO and rapid page speed for a premium beauty brand.',
+    outcome: 'Achieved a Lighthouse score of 98+ and improved organic traffic by 25%.',
+    mainImage: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=1200',
+    screenshots: [
+      'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=800'
+    ],
+    tags: ['WordPress', 'E-commerce']
+  },
+  {
+    slug: 'horizon-real-estate-wp',
+    title: 'Horizon Real Estate',
+    year: '2022',
+    description: 'Custom WordPress publication for modern luxury real estate journals and property listings.',
+    role: 'UI Designer & Dev',
+    background: 'Creating a grid-breaking layout that prioritizes high-resolution property imagery and seamless navigation for buyers.',
+    outcome: 'Average user session duration increased by 45% through improved property discovery.',
+    mainImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200',
+    screenshots: [
+      'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800'
+    ],
+    tags: ['WordPress', 'Real Estate']
+  },
+  {
+    slug: 'pulse-fitness-wp',
+    title: 'Pulse Fitness Hub',
+    year: '2022',
+    description: 'A heavy-duty WordPress platform for a pan-Indian fitness and health chain.',
+    role: 'Lead Developer',
+    background: 'Integrating real-time membership management and scheduling within a user-friendly WordPress dashboard.',
+    outcome: 'Reduced support tickets by 20% through automated membership self-service portals.',
+    mainImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200',
+    screenshots: [
+      'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800'
+    ],
+    tags: ['WordPress', 'Health']
   }
 ];
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import FooterCanvas from './FooterCanvas';
 
 const ScrollToTopButton: React.FC = () => {
@@ -41,17 +41,37 @@ const ScrollToTopButton: React.FC = () => {
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const footerRef = useRef<HTMLElement>(null);
   const [footerProgress, setFooterProgress] = useState(0);
 
   const navLinks = [
-    { name: 'WORK', path: '/' },
+    { name: 'HOME', path: '/' },
+    { name: 'PROJECTS', path: '/#projects' },
     { name: 'ABOUT', path: '/about' },
     { name: 'POSTS', path: '/posts' },
     { name: 'NOW', path: '/now' },
     { name: 'CONTACT', path: '/contact' },
   ];
+
+  const handleNavClick = (link: { name: string, path: string }) => {
+    setIsMobileMenuOpen(false);
+    if (link.name === 'PROJECTS') {
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation to finish then scroll
+        setTimeout(() => {
+          const el = document.getElementById('projects-grid');
+          el?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      } else {
+        const el = document.getElementById('projects-grid');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+  };
 
   const socialLinks = [
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/muneebbashir', icon: 'linkedin' },
@@ -59,7 +79,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { name: 'Instagram', url: 'https://www.instagram.com/muneebbashir/', icon: 'instagram' },
   ];
 
-  // Subtle parallax effect for footer
   useEffect(() => {
     const handleScroll = () => {
       if (!footerRef.current) return;
@@ -78,10 +97,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      {/* Scroll to Top Button */}
       <ScrollToTopButton />
 
-      {/* Changed: Navbar is now non-sticky (removed sticky top-0) */}
       <header className="relative z-50 py-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link to="/" className="group flex items-center gap-3">
@@ -96,6 +113,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={(e) => {
+                  if (link.name === 'PROJECTS') {
+                    e.preventDefault();
+                    handleNavClick(link);
+                  }
+                }}
                 className={`text-[10px] font-bold tracking-[0.3em] transition-all hover:text-white relative group ${
                   location.pathname === link.path ? 'text-white' : 'text-slate-500'
                 }`}
@@ -114,7 +137,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center space-y-8 p-6">
             <button className="absolute top-12 right-6 text-white" onClick={() => setIsMobileMenuOpen(false)}>
@@ -125,7 +147,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 key={link.path}
                 to={link.path}
                 className="text-4xl font-bold text-white tracking-tighter hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => {
+                  if (link.name === 'PROJECTS') {
+                    e.preventDefault();
+                    handleNavClick(link);
+                  } else {
+                    setIsMobileMenuOpen(false);
+                  }
+                }}
               >
                 {link.name}
               </Link>
@@ -142,10 +171,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         ref={footerRef}
         className="relative py-32 px-6 md:px-12 border-t border-white/5 mt-20 overflow-hidden bg-[#070707]"
       >
-        {/* Dynamic Background Element */}
         <FooterCanvas />
 
-        {/* Parallax Background Text */}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none"
           style={{ transform: `translateY(${(1 - footerProgress) * 100}px)` }}
