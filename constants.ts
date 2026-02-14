@@ -1,4 +1,3 @@
-
 import { Project, Post, Update } from './types';
 
 export const PROJECTS: Project[] = [
@@ -121,9 +120,35 @@ export const UPDATES: Update[] = [
 
 export const TOOL_LOGOS = [
   { name: 'Figma', url: 'https://cdn.simpleicons.org/figma/white' },
-  { name: 'React', url: 'https://cdn.simpleicons.org/react/white' },
-  { name: 'TypeScript', url: 'https://cdn.simpleicons.org/typescript/white' },
-  { name: 'Tailwind', url: 'https://cdn.simpleicons.org/tailwindcss/white' },
-  { name: 'VS Code', url: 'https://cdn.simpleicons.org/visualstudiocode/white' },
+  { name: 'WordPress', url: 'https://cdn.simpleicons.org/wordpress/white' },
   { name: 'Framer', url: 'https://cdn.simpleicons.org/framer/white' },
+  { name: 'Shopify', url: 'https://cdn.simpleicons.org/shopify/white' },
+  { name: 'Illustrator', url: 'https://cdn.simpleicons.org/adobeillustrator/white' },
+  { name: 'Canva', url: 'https://cdn.simpleicons.org/canva/white' },
+  { name: 'Photoshop', url: 'https://cdn.simpleicons.org/adobephotoshop/white' },
+  { name: 'React', url: 'https://cdn.simpleicons.org/react/white' },
+  { name: 'Tailwind', url: 'https://cdn.simpleicons.org/tailwindcss/white' },
+  { name: 'TypeScript', url: 'https://cdn.simpleicons.org/typescript/white' },
+  { name: 'Webflow', url: 'https://cdn.simpleicons.org/webflow/white' },
+];
+
+export const CERTIFICATIONS = [
+  {
+    title: "Google UX Design Professional",
+    issuer: "Coursera / Google",
+    year: "2023",
+    icon: "verified"
+  },
+  {
+    title: "Advanced React & TypeScript",
+    issuer: "Frontend Masters",
+    year: "2024",
+    icon: "code"
+  },
+  {
+    title: "Visual Design & Identity",
+    issuer: "Interaction Design Foundation",
+    year: "2022",
+    icon: "palette"
+  }
 ];

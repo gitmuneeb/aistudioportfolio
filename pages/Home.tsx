@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { PROJECTS } from '../constants';
+import { PROJECTS, TOOL_LOGOS } from '../constants';
 import ThreeScene from '../components/ThreeScene';
 
 const useReveal = () => {
@@ -37,7 +36,6 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
       }`}
     >
-      {/* Container with a fixed aspect ratio to prevent viewport overflow */}
       <div className="aspect-[3/4] w-full overflow-hidden">
          <img 
             src={project.mainImage} 
@@ -46,7 +44,6 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
          />
       </div>
       
-      {/* Overlay Information */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
       
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 space-y-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-700">
@@ -71,6 +68,22 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
         </div>
       </div>
     </Link>
+  );
+};
+
+const ToolsCarousel: React.FC = () => {
+  const extendedLogos = [...TOOL_LOGOS, ...TOOL_LOGOS, ...TOOL_LOGOS];
+  return (
+    <div className="w-full overflow-hidden py-12 mask-fade-edges pause-on-hover">
+      <div className="flex w-max animate-infinite-scroll-ltr gap-16 md:gap-24 items-center px-12">
+        {extendedLogos.map((logo, i) => (
+          <div key={i} className="flex items-center gap-4 group opacity-40 hover:opacity-100 transition-opacity duration-500">
+            <img src={logo.url} alt={logo.name} className="w-8 h-8 md:w-10 md:h-10 object-contain filter brightness-200" />
+            <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase hidden md:inline">{logo.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -142,13 +155,13 @@ const Home: React.FC = () => {
                   <p className="text-base text-slate-400 max-w-sm font-medium leading-relaxed italic">
                     "Designing high-end interfaces for platforms that value clarity, speed, and aesthetics."
                   </p>
-                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Lahore, Pakistan • Open for Remote</p>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Delhi, India • Open for Remote</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Carousel Section - Viewport Optimized */}
+        {/* Carousel Section */}
         <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden pause-on-hover py-32 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
           <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16 flex items-center justify-between">
             <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.5em]">PROCESS & MOMENTS</span>
@@ -176,7 +189,7 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* Selected Works Grid - Updated to 3 columns for viewport containment */}
+        {/* Selected Works Grid */}
         <section className="space-y-32 pt-32">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-16">
             <div className="space-y-6">
@@ -193,6 +206,16 @@ const Home: React.FC = () => {
           </div>
         </section>
 
+        {/* Tools Carousel - HOME Left to Right */}
+        <div className="pt-40">
+          <div className="flex items-center justify-center gap-6 mb-8 opacity-40">
+             <div className="h-px w-12 bg-white"></div>
+             <span className="text-[10px] font-bold text-white uppercase tracking-[0.5em]">CORE TECH STACK</span>
+             <div className="h-px w-12 bg-white"></div>
+          </div>
+          <ToolsCarousel />
+        </div>
+
         {/* CTA Section */}
         <section className="relative py-80 overflow-hidden group/cta">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02] select-none whitespace-nowrap overflow-hidden">
@@ -205,7 +228,7 @@ const Home: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-4 mb-4 opacity-60 group-hover/cta:opacity-100 transition-opacity duration-700">
                 <span className="h-[1px] w-8 bg-primary"></span>
-                <span className="text-[10px] text-white font-bold uppercase tracking-[0.6em]">ESTABLISHED IN 1998 • PAKISTAN</span>
+                <span className="text-[10px] text-white font-bold uppercase tracking-[0.6em]">ESTABLISHED IN 1998 • INDIA</span>
                 <span className="h-[1px] w-8 bg-primary"></span>
               </div>
               <h2 className="text-8xl md:text-[15vw] font-black tracking-[calc(-0.03em)] text-white uppercase leading-[0.75] transition-all duration-1000 group-hover/cta:tracking-tight">

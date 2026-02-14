@@ -24,6 +24,7 @@
                     },
                     animation: {
                         'infinite-scroll': 'infinite-scroll 40s linear infinite',
+                        'infinite-scroll-ltr': 'infinite-scroll-ltr 40s linear infinite',
                         'reveal-up': 'reveal-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'fade-in': 'fade-in 1.5s ease-out forwards',
                     },
@@ -31,6 +32,10 @@
                         'infinite-scroll': {
                             from: { transform: 'translateX(0)' },
                             to: { transform: 'translateX(-50%)' },
+                        },
+                        'infinite-scroll-ltr': {
+                            from: { transform: 'translateX(-50%)' },
+                            to: { transform: 'translateX(0)' },
                         },
                         'reveal-up': {
                             '0%': { transform: 'translateY(60px)', opacity: '0' },
@@ -78,7 +83,8 @@
             background: #222;
             border-radius: 10px;
         }
-        .pause-on-hover:hover .animate-infinite-scroll {
+        .pause-on-hover:hover .animate-infinite-scroll,
+        .pause-on-hover:hover .animate-infinite-scroll-ltr {
             animation-play-state: paused;
         }
         #three-canvas {
@@ -90,6 +96,9 @@
             z-index: -1;
             pointer-events: none;
             opacity: 0.6;
+        }
+        .mask-fade-edges {
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
     </style>
 <script type="importmap">

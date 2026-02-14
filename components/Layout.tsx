@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import FooterCanvas from './FooterCanvas';
@@ -166,7 +165,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Lahore, Pakistan</span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Delhi, India</span>
                 </div>
             </div>
             
@@ -207,7 +206,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
             <div className="flex gap-12">
               <div className="text-[11px] font-bold text-slate-700 uppercase tracking-[0.4em]">
-                PAKISTAN • 31°52'N 74°18'E
+                INDIA • 28°36'N 77°12'E
               </div>
               <div className="text-[11px] font-bold text-slate-700 uppercase tracking-[0.4em] hidden md:block">
                 DESIGNED BY MB
