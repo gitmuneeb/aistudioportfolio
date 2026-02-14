@@ -33,11 +33,12 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
     <Link 
       to={`/work/${project.slug}`} 
       ref={domRef}
-      className={`group relative block overflow-hidden rounded-[2.5rem] bg-neutral-900 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`group relative block overflow-hidden rounded-[2rem] bg-neutral-900 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
       }`}
     >
-      <div className="aspect-[16/10] md:aspect-[4/5] w-full overflow-hidden">
+      {/* Container with a fixed aspect ratio to prevent viewport overflow */}
+      <div className="aspect-[3/4] w-full overflow-hidden">
          <img 
             src={project.mainImage} 
             alt={project.title} 
@@ -46,27 +47,27 @@ const ProjectCard: React.FC<{ project: any, index: number }> = ({ project }) => 
       </div>
       
       {/* Overlay Information */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
       
-      <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 space-y-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 space-y-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-700">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] text-primary font-bold uppercase tracking-[0.4em]">{project.year}</span>
-          <div className="flex gap-2">
-            {project.tags.slice(0, 2).map((tag: string) => (
-              <span key={tag} className="text-[8px] text-white/40 font-bold uppercase tracking-widest border border-white/10 px-2 py-1 rounded-full">
+          <span className="text-[9px] text-primary font-bold uppercase tracking-[0.4em]">{project.year}</span>
+          <div className="flex gap-1.5">
+            {project.tags.slice(0, 1).map((tag: string) => (
+              <span key={tag} className="text-[7px] text-white/40 font-bold uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">
                 {tag}
               </span>
             ))}
           </div>
         </div>
-        <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase leading-none">
+        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter uppercase leading-none">
           {project.title}
         </h3>
-        <p className="text-slate-400 text-sm max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
+        <p className="text-slate-400 text-xs max-w-xs opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 line-clamp-2">
           {project.description}
         </p>
-        <div className="pt-4 flex items-center gap-3 text-white font-bold text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
-          View Case <span className="material-icons text-xs">arrow_forward</span>
+        <div className="pt-2 flex items-center gap-2 text-white font-bold text-[9px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
+          Explore <span className="material-icons text-[10px]">arrow_forward</span>
         </div>
       </div>
     </Link>
@@ -147,7 +148,7 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* Improved Carousel - Portrait Design - 3 visible in viewport */}
+        {/* Carousel Section - Viewport Optimized */}
         <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden pause-on-hover py-32 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
           <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16 flex items-center justify-between">
             <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.5em]">PROCESS & MOMENTS</span>
@@ -169,14 +170,13 @@ const Home: React.FC = () => {
                    <p className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-2">ARCHIVE • 2025</p>
                    <h4 className="text-white text-2xl font-bold tracking-tighter uppercase">PROCESS BLOCK 0{i+1}</h4>
                 </div>
-                {/* Noise texture overlay */}
                 <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Selected Works Grid */}
+        {/* Selected Works Grid - Updated to 3 columns for viewport containment */}
         <section className="space-y-32 pt-32">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-16">
             <div className="space-y-6">
@@ -186,25 +186,20 @@ const Home: React.FC = () => {
             <p className="text-slate-500 max-w-xs text-sm font-medium">A curated selection of work ranging from e-commerce systems to IoT platforms.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {PROJECTS.map((project, idx) => (
               <ProjectCard key={project.slug} project={project} index={idx} />
             ))}
           </div>
         </section>
 
-        {/* Revamped CTA Section - Magnetic & Dynamic */}
+        {/* CTA Section */}
         <section className="relative py-80 overflow-hidden group/cta">
-          {/* Animated Background Text Marquee */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02] select-none whitespace-nowrap overflow-hidden">
              <div className="text-[25vw] font-black tracking-tighter uppercase leading-none animate-infinite-scroll italic" style={{ animationDuration: '60s', animationDirection: 'reverse' }}>
                SAY HELLO • HIRE ME • START A PROJECT • SAY HELLO • HIRE ME • START A PROJECT •
              </div>
           </div>
-
-          {/* Floating Accents */}
-          <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-primary rounded-full animate-ping delay-75"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-white/20 rounded-full animate-ping delay-500"></div>
 
           <div className="relative text-center space-y-12 z-10">
             <div className="space-y-4">
@@ -231,7 +226,6 @@ const Home: React.FC = () => {
                 </div>
               </Link>
 
-              {/* Status Indicator */}
               <div className="flex items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest border border-white/5 px-8 py-4 rounded-full backdrop-blur-md">
                 <div className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
